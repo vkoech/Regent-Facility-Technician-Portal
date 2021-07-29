@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            Assigned Tickets
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive  table-striped">
+          <table class="table">
+            <thead class=" text-primary font-weight-bold bg-dark">
+            <th>
+              No
+            </th>
+            <th>
+              Property Description
+            </th>
+            <th>
+              Floor Number
+            </th>
+            <th>
+              Unit Number
+            </th>
+            <th>
+              Category
+            </th>
+            <th>
+              Request Status
+            </th>
+            <th>
+              Maintenance Description
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Action
+            </th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tickets of assignedTicketService.assignedTickets">
+              <td>{{tickets.No}}</td>
+              <td>{{tickets.PropertyDescription}}</td>
+              <td>{{tickets.FloorNo}}</td>
+              <td>{{tickets.UnitNo}}</td>
+              <td>{{tickets.Category}}</td>
+              <td>{{tickets.RequestStatus}}</td>
+              <td>{{tickets.DescriptionOfMaintenace}}</td>
+              <td>{{tickets.Status}}</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" (click)="open(mymodal, tickets)" >View<i class="fa fa-eye ml-1" aria-hidden="true"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <ng-template #mymodal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Add Comments and Close Tickets</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal" [formGroup]="assignedTicketService.formModel" (submit)="onSubmit()" autocomplete="off"  >
+                <p>(Fields marked * are required)</p>
+                <div class="row">
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group col-sm-12">
+                        <label for="description">Description*:</label>
+                        <textarea class="textarea form-control " formControlName="TechnicianComments" cols="90" rows="20" id="description" maxlength="150" ></textarea>
+                      </div><!--form-group-->
+                    </div><!--col-->
+                  </div><!--row-->
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group col-sm-12">
+                        <input type="text" id="no" formControlName="No" [(ngModel)]="assignedTicks.No" class="form-control" hidden>
+                      </div><!--form-group-->
+                    </div><!--col-->
+                  </div><!--row-->
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group col-sm-12 mb-0 clearfix">
+                      <hr>
+                      <button class="btn btn-primary pull-right"><i class="fas fa-save"></i>Close Tickets</button>
+                    </div><!--form-group-->
+                  </div><!--col-->
+                </div><!--row-->
+              </form>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

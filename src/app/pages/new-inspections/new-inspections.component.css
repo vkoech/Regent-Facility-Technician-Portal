@@ -1,0 +1,8 @@
+.table-responsive{
+    overflow-y: hidden;
+    overflow-x: hidden;
+   }
+.comment{
+    border-width:0px;
+border:none;
+}

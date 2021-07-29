@@ -1,0 +1,15 @@
+.card {
+    /* border-radius: 0;   */
+    padding: 10px;
+    min-height: 200px;
+    box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px 2px; 
+   }
+   .table-responsive{
+     overflow-y: hidden;
+     overflow-x: hidden;
+    }
+    .table {
+     border: 1px solid #778899;
+     margin-left: 2px;
+     margin-top: 5px;
+    }
