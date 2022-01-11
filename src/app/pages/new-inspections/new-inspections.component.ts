@@ -46,11 +46,10 @@ export class NewInspectionsComponent implements OnInit {
         (res: any) => {
           if (res.responseCode) {
             this.toastr.success(res.responseDescription, 'Success');
-            localStorage.setItem('docNumber', 
+            localStorage.setItem('docNumber',
             this.inspectionService.formModel.value.DocumentNo);
             // this.inspectionService.formModel.reset();
-            this.inspectionService.formModel.controls['Type'].reset()
-            this.inspectionService.getInspectionHeaderNo(this.userId);
+           //this.inspectionService.getInspectionHeaderNo(this.userId);
             this.getInspectionLines(this.documentNo);
           }
           else {

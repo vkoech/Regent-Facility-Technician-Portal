@@ -16,7 +16,7 @@ export class NewInsectionsService {
   inspectionLines: InspectionLine[] = [];
   inspectionHeader: InspectionHeader[] = [];
   checkedList: InspectionLine[]
-  
+
 
   readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/inspection/';
 
@@ -49,12 +49,20 @@ export class NewInsectionsService {
       DocumentNo: this.formModel.value.DocumentNo,
       TechnicianNo: this.formModel.value.TechnicianNo,
       Type: this.formModel.value.Type,
-      ItemCode: this.formModel.value.ItemCode,     
+      ItemCode: this.formModel.value.ItemCode,
     };
     return this.http.post(this.baseUrl + '/InsertInspectionLines', body);
   }
   postInspection(list: InspectionLine[]) {
     return this.http.post(this.baseUrl + 'postInspectionLineDetails', list);
+  }
+  getGeneratedNo(documentNo) {
+    this.http.get<InspectionLine[]>(this.baseUrl + 'getInspectionLines?headerNo=' + documentNo).subscribe(
+      data => {
+        this.inspectionLines = data;
+        // console.log(this.inspectionLines);
+      }
+    );
   }
   //get inspection types
   getInspectionItemTypes() {
@@ -75,16 +83,6 @@ export class NewInsectionsService {
       }
     );
   }
-
-  getGeneratedNo(documentNo) {
-    this.http.get<InspectionLine[]>(this.baseUrl + 'getInspectionLines?headerNo=' + documentNo).subscribe(
-      data => {
-        this.inspectionLines = data;
-        // console.log(this.inspectionLines);
-      }
-    );
-  }
-
   //Get inspection lines
   insetrtInspectionLines(documentNo: string, type: string, itemCode: string) {
     this.http.get<InspectionLine[]>(this.baseUrl + 'inspectionLines?DocumentNo=' + documentNo + '&Type=' + type + '&ItemCode=' + itemCode).subscribe(
@@ -93,7 +91,7 @@ export class NewInsectionsService {
         console.log(this.inspectionLines);
       }
     );
-    
+
   }
   //Get inspection header No.
   getInspectionHeaderNo(userId) {

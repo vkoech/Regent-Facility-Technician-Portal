@@ -9,7 +9,7 @@
                             <label for="inspection_Type">Area of Inspection</label>
                             <select class="form-control" id="inspection_Type" formControlName="Type"
                                 (change)="getInspectionItems($any($event.target).value)">
-                                <option [ngValue]="null" disabled>--Select Type--</option>
+                                <option [ngValue]="undefined" selected>Select</option>
                                 <option *ngFor="let inspectionItemType of inspectionService.inspectionItemTypes"
                                     [value]="inspectionItemType.Code">
                                     {{inspectionItemType.Description}}
@@ -20,9 +20,9 @@
                         <!-- Item Code Field -->
                         <div class="form-group col-sm-12 ml-5 ">
                             <label for="itemNo">Item Code</label>
-                            <select class="form-control" id="itemNo" formControlName="ItemCode" (change)="submit"> >
-                                <option value="undefined" [selected]=true disabled>--Select Item--</option>
-                                <option *ngFor="let inspectionItem of inspectionService.inspectionItems"
+                            <select class="form-control" id="itemNo" formControlName="ItemCode" (change)="onSubmit()">
+                              <option [ngValue]="undefined" selected>Select</option>
+                              <option *ngFor="let inspectionItem of inspectionService.inspectionItems"
                                     [value]="inspectionItem.No">
                                     {{inspectionItem.Description}}
                             </select>
@@ -35,7 +35,7 @@
                         <div class="form-group col-sm-12 ml-5 mt-5">
                             <label for="headerNo">System generated No.</label>
                             <input type="text" id="headerNo" formControlName="DocumentNo"
-                                [(ngModel)]="inspectionService.inspectionHeader.No" class="form-control" readonly>
+                                [(ngModel)]="inspectionService?.inspectionHeader.No" class="form-control" readonly>
                         </div>
                         <!-- Technician field -->
                         <div class="col-md-6">
@@ -46,38 +46,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex ml-5 mb-5 mt-3">
-                    <button class="btn btn-primary float-right" [class.white]="!inspectionService.formModel.valid" [disabled]="!inspectionService.formModel.valid"><i class="fa fa-rotate-left"></i>
-                        Generate Inspection Areas</button>
-                </div>
             </form>
+            <form [formGroup]="inspectionService.forModelListItems" (ngSubmit)="onChecked()" autocomplete="off">
+              <div class="col-md-12 mr-5">
+                  <div class="table-responsive" *ngIf="inspectionService.inspectionLines?.length > 0">
+                      <table class="table m-4">
+                          <thead class=" text-secondary">
+                              <th> Inspection Area</th>
+                              <th>Comments</th>
+                              <th>Status</th>
+                          </thead>
+                          <tr *ngFor="let inspectionLine of inspectionService.inspectionLines">
+                              <!-- <td>{{ inspectionLine.LineNo }}</td> -->
+                              <td>{{ inspectionLine.InspectionArea }}</td>
+                              <td><input type="text" id="headerNo" class="form-control" formControlName="Comments"
+                                      [(ngModel)]="inspectionLine.Comments"></td>
+                              <th scope="row">
+                                  <label><input type="checkbox" formControlName="Checked" [value]="inspectionLine.LineNo"
+                                          [(ngModel)]="inspectionLine.Checked" [checked]="inspectionLine.Checked"
+                                          (change)="onCheckboxChange(inspectionLine)">Check</label>
+                              </th>
+                          </tr>
+                      </table>
+                      <hr>
+                      <button class="btn btn-primary pull-justify"><i class="fa fa-window-close"></i>Close
+                          Inspection</button>
+                  </div>
+              </div>
+          </form>
         </div>
     </div>
 </div>
-<form [formGroup]="inspectionService.forModelListItems" (ngSubmit)="onChecked()">
-    <div class="col-md-12">
-        <div class="table-responsive table-bordered" *ngIf="inspectionService.inspectionLines?.length > 0">
-            <table class="table">
-                <thead class=" text-secondary">
-                    <th> Inspection Area</th>
-                    <th>Comments</th>
-                    <th>Status</th>
-                </thead>
-                <tr *ngFor="let inspectionLine of inspectionService.inspectionLines">
-                    <!-- <td>{{ inspectionLine.LineNo }}</td> -->
-                    <td>{{ inspectionLine.InspectionArea }}</td>
-                    <td><input type="text" id="headerNo" class="form-control" formControlName="Comments"
-                            [(ngModel)]="inspectionLine.Comments"></td>
-                    <th scope="row">
-                        <label><input type="checkbox" formControlName="Checked" [value]="inspectionLine.LineNo"
-                                [(ngModel)]="inspectionLine.Checked" [checked]="inspectionLine.Checked"
-                                (change)="onCheckboxChange(inspectionLine)">Check</label>
-                    </th>
-                </tr>
-            </table>
-            <hr>
-            <button class="btn btn-primary pull-justify"><i class="fa fa-window-close"></i>Close
-                Inspection</button>
-        </div>
-    </div>
-</form>
+
