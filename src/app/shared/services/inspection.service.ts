@@ -11,11 +11,11 @@ import { InspectionLine } from '../models/inspection-line.model';
 })
 export class InspectionService implements OnInit {
  readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/inspection/';
- public loginUserId: string; 
+ public loginUserId: string;
  inspectionHeader:InspectionHeader[];
 
   constructor(public fb:FormBuilder,public http:HttpClient) { }
-  
+
   ngOnInit(): void {
    //  this.loginUserId = localStorage.getItem('techNo');
      this.getInspectionHeaderByTechnicianNo(localStorage.getItem('techNo'));

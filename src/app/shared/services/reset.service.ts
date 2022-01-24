@@ -9,7 +9,7 @@ import { ConfirmedValidator } from 'app/pages/code-capture/confirmed.validators'
 })
 export class ResetService {
 
-  readonly baseUrl = '';
+  readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/maintenance/';
 
   formModel = this.fb.group({
       Password: ['', [Validators.required, Validators.minLength(8)]],
@@ -25,6 +25,6 @@ export class ResetService {
     const body = {
       Password: this.formModel.value.Password,
     };
-    return this.http.post(this.baseUrl + '/postnewapplicantregistration', body);
+    return this.http.post(this.baseUrl + '/resetTechnicianPassword', body);
   }
 }

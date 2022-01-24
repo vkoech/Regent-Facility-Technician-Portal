@@ -22,6 +22,8 @@ import { ClosedByTechnicianComponent } from './pages/closed-by-technician/closed
 import {AssignedTicketsComponent} from './pages/assigned-tickets/assigned-tickets.component';
 import { InspectionComponent } from './pages/inspection/inspection.component';
 import { NewInspectionsComponent } from './pages/new-inspections/new-inspections.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 
 
@@ -34,7 +36,9 @@ import { NewInspectionsComponent } from './pages/new-inspections/new-inspections
     ClosedByTechnicianComponent,
     AssignedTicketsComponent,
     InspectionComponent,
-    NewInspectionsComponent
+    NewInspectionsComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserAnimationsModule,

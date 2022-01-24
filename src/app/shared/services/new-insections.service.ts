@@ -69,7 +69,6 @@ export class NewInsectionsService {
     this.http.get<InspectionItemType[]>(this.baseUrl + 'getInspectionItemTypes').subscribe(
       data => {
         this.inspectionItemTypes = data;
-        // console.log(this.inspectionItemTypes);
       }
     );
   }
@@ -79,7 +78,6 @@ export class NewInsectionsService {
     this.http.get<InspectionItem[]>(this.baseUrl + 'getInspectionItems?type=' + type).subscribe(
       data => {
         this.inspectionItems = data;
-        // console.log(this.inspectionItemTypes);
       }
     );
   }
@@ -88,7 +86,6 @@ export class NewInsectionsService {
     this.http.get<InspectionLine[]>(this.baseUrl + 'inspectionLines?DocumentNo=' + documentNo + '&Type=' + type + '&ItemCode=' + itemCode).subscribe(
       data => {
         this.inspectionLines = data;
-        console.log(this.inspectionLines);
       }
     );
 
@@ -98,7 +95,7 @@ export class NewInsectionsService {
     this.http.get<InspectionHeader[]>(this.baseUrl + 'getInspectionHeaderNo?technicianNo=' + userId).subscribe(
       data => {
         this.inspectionHeader = data;
-        // console.log(this.inspectionHeader)
+        localStorage.setItem("inspectionHeader", JSON.stringify(this.inspectionHeader)); //store colors
       }
     );
   }

@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./inspection.component.css']
 })
 export class InspectionComponent implements OnInit {
-  
+
   readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/inspection/';
   USERID: string;
   inspectionJsonValues:InspectionHeader[];
@@ -20,7 +20,7 @@ export class InspectionComponent implements OnInit {
 
   ngOnInit():void{
     this.USERID = localStorage.getItem('techNo');
-    this.getInspectionHeaderByTechnicianNo();   
+    this.getInspectionHeaderByTechnicianNo();
   }
   onSubmit(){
   }

@@ -1,6 +1,6 @@
+import { InspectionLine } from './../../shared/models/inspection-line.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { InspectionLine } from 'app/shared/models/inspection-line.model';
 import { NewInsectionsService } from 'app/shared/services/new-insections.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,35 +22,36 @@ export class NewInspectionsComponent implements OnInit {
   documentNo: string;
   inspectionArrayList: FormArray;
   inspectionFormList: FormGroup;
+  val: any
 
 
 
   constructor(public inspectionService: NewInsectionsService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.inspectionService.getInspectionItemTypes();
     this.userId = localStorage.getItem('techNo');
-    this.documentNo = localStorage.getItem('docNumber');
-    // console.log(this.documentNo);
     this.inspectionService.getInspectionHeaderNo(this.userId);
-    // this.getInspectionLines(this.documentNo);
-
+    this.val = JSON.parse(localStorage.getItem('inspectionHeader'));
+    this.documentNo = this.val?.No
+    this.inspectionService.getInspectionItemTypes();
   }
   get f() {  return this.inspectionService.formModel?.controls; }
 
 
   onSubmit() {
-    localStorage.setItem('docNumber', this.inspectionService.formModel.value.DocumentNo);
+    // localStorage.setItem('docNumber', this.inspectionService.formModel.value.DocumentNo);
     if (this.inspectionService.formModel.valid) {
       this.inspectionService.postInspectionHeaderDetails().subscribe(
         (res: any) => {
           if (res.responseCode) {
+            if(this.documentNo == null){
+              location.reload();
+            }
+            else{
+              this.getInspectionLines(this.documentNo);
+
+            }
             this.toastr.success(res.responseDescription, 'Success');
-            localStorage.setItem('docNumber',
-            this.inspectionService.formModel.value.DocumentNo);
-            // this.inspectionService.formModel.reset();
-           //this.inspectionService.getInspectionHeaderNo(this.userId);
-            this.getInspectionLines(this.documentNo);
           }
           else {
             this.toastr.error(' failed');

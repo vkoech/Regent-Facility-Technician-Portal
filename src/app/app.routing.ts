@@ -1,3 +1,5 @@
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { Routes } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -16,7 +18,11 @@ export const AppRoutes: Routes = [
   },
   {
     path: 'resetUserPassword',
-    component: CodeCaptureComponent
+    component: ResetPasswordComponent
+  },
+  {
+    path: 'forgotPassword',
+    component: ForgotPasswordComponent
   },
   {
     path: '',
