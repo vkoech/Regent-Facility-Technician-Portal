@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NewInsectionsService } from 'app/shared/services/new-insections.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 
@@ -26,7 +27,7 @@ export class NewInspectionsComponent implements OnInit {
 
 
 
-  constructor(public inspectionService: NewInsectionsService, private toastr: ToastrService, private fb: FormBuilder) { }
+  constructor(public inspectionService: NewInsectionsService, private toastr: ToastrService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.userId = localStorage.getItem('techNo');
@@ -52,6 +53,8 @@ export class NewInspectionsComponent implements OnInit {
 
             }
             this.toastr.success(res.responseDescription, 'Success');
+            this.router.navigate(['/newInspection']);
+            this.inspectionService.inspectionLines.length = 0;
           }
           else {
             this.toastr.error(' failed');
@@ -74,7 +77,7 @@ export class NewInspectionsComponent implements OnInit {
         (res: any) => {
           if (res.responseCode) {
             this.toastr.success(res.responseDescription, 'Success');
-            window.location.reload();
+            //window.location.reload();
           }
           else {
             this.toastr.error( res.responseDescription, ' failed');
