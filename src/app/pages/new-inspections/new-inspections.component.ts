@@ -20,7 +20,7 @@ export class NewInspectionsComponent implements OnInit {
   checkedList: any[];
   currentSelected: {};
   public userId: string;
-  documentNo: string;
+  documentNo: any;
   inspectionArrayList: FormArray;
   inspectionFormList: FormGroup;
   val: any
@@ -32,29 +32,19 @@ export class NewInspectionsComponent implements OnInit {
   ngOnInit(): void {
     this.userId = localStorage.getItem('techNo');
     this.inspectionService.getInspectionHeaderNo(this.userId);
-    this.val = JSON.parse(localStorage.getItem('inspectionHeader'));
-    this.documentNo = this.val?.No
     this.inspectionService.getInspectionItemTypes();
   }
   get f() {  return this.inspectionService.formModel?.controls; }
 
 
   onSubmit() {
-    // localStorage.setItem('docNumber', this.inspectionService.formModel.value.DocumentNo);
     if (this.inspectionService.formModel.valid) {
       this.inspectionService.postInspectionHeaderDetails().subscribe(
         (res: any) => {
           if (res.responseCode) {
-            if(this.documentNo == null){
-              location.reload();
-            }
-            else{
-              this.getInspectionLines(this.documentNo);
-
-            }
+            this.documentNo = this.inspectionService.inspectionHeader?.No;
+            this.getInspectionLines(this.documentNo);
             this.toastr.success(res.responseDescription, 'Success');
-            this.router.navigate(['/newInspection']);
-            this.inspectionService.inspectionLines.length = 0;
           }
           else {
             this.toastr.error(' failed');
@@ -71,13 +61,15 @@ export class NewInspectionsComponent implements OnInit {
     }
   }
 
+
   onChecked() {
-    console.log(this.inspectionService.formModel.value)
       this.inspectionService.postInspection(this.list).subscribe(
         (res: any) => {
           if (res.responseCode) {
             this.toastr.success(res.responseDescription, 'Success');
-            //window.location.reload();
+            window.location.reload();
+            // this.list.splice(0, 1);
+            // this.router.navigate(['/inspection']);
           }
           else {
             this.toastr.error( res.responseDescription, ' failed');

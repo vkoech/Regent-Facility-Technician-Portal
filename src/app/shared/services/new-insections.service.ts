@@ -14,7 +14,7 @@ export class NewInsectionsService {
   inspectionItemTypes: InspectionItemType[];
   inspectionItems: InspectionItem[];
   inspectionLines: InspectionLine[] = [];
-  inspectionHeader: InspectionHeader[] = [];
+  inspectionHeader: InspectionHeader;
   checkedList: InspectionLine[]
 
 
@@ -92,7 +92,7 @@ export class NewInsectionsService {
   }
   //Get inspection header No.
   getInspectionHeaderNo(userId) {
-    this.http.get<InspectionHeader[]>(this.baseUrl + 'getInspectionHeaderNo?technicianNo=' + userId).subscribe(
+    this.http.get<InspectionHeader>(this.baseUrl + 'getInspectionHeaderNo?technicianNo=' + userId).subscribe(
       data => {
         this.inspectionHeader = data;
         localStorage.setItem("inspectionHeader", JSON.stringify(this.inspectionHeader)); //store colors

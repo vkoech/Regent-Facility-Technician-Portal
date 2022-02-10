@@ -9,7 +9,7 @@
         <!-- <h6 class="font-weight-bolder p-2">Sign in to continue.</h6> -->
         <form [formGroup]="serviceLogin.formModel"(submit)="onSubmit()" autocomplete="off">
           <div class="form-group">
-            <label for="tech_no"> Technician Number</label>
+            <label for="tech_no"> Account Number</label>
             <input formControlName="TechnicianNo" id="tech_no" type="text" class="form-control">
             <div *ngIf="f.TechnicianNo.touched && f.TechnicianNo.invalid" class=" text-danger">
               <div *ngIf="f.TechnicianNo.errors?.required">Technician No is required.</div>
