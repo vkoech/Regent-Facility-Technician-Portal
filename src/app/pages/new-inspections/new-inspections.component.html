@@ -46,6 +46,7 @@
                         </div>
                     </div>
                 </div>
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
             </form>
             <form [formGroup]="inspectionService.forModelListItems" (ngSubmit)="onChecked()" autocomplete="off">
               <div class="col-md-12 mr-5">
@@ -70,7 +71,9 @@
                       </table>
                       <hr>
                       <button class="btn btn-primary pull-justify"><i class="fa fa-window-close"></i>Close
-                          Inspection</button>
+                          Inspection
+                          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        </button>
                   </div>
               </div>
           </form>

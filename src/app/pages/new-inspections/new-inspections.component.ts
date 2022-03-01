@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 export class NewInspectionsComponent implements OnInit {
 
   isDisabled: boolean = true;
+  loading = false;
   list: InspectionLine[] = [];
   inspectionLines: InspectionLine[] = [];
   checkedList: any[];
@@ -42,9 +43,11 @@ export class NewInspectionsComponent implements OnInit {
       this.inspectionService.postInspectionHeaderDetails().subscribe(
         (res: any) => {
           if (res.responseCode) {
+            this.loading = true;
             this.documentNo = this.inspectionService.inspectionHeader?.No;
             this.getInspectionLines(this.documentNo);
             this.toastr.success(res.responseDescription, 'Success');
+            this.loading = false;
           }
           else {
             this.toastr.error(' failed');
@@ -60,16 +63,21 @@ export class NewInspectionsComponent implements OnInit {
       this.toastr.error('All fields Required')
     }
   }
-
+   onDelete(deleteme){
+     this.list.splice(deleteme, 1)
+   }
 
   onChecked() {
       this.inspectionService.postInspection(this.list).subscribe(
         (res: any) => {
           if (res.responseCode) {
+            this.loading = true;
             this.toastr.success(res.responseDescription, 'Success');
-            window.location.reload();
+            this.deleteList();
+            // window.location.reload();
             // this.list.splice(0, 1);
-            // this.router.navigate(['/inspection']);
+            this.loading = false;
+            this.router.navigate(['/inspection']);
           }
           else {
             this.toastr.error( res.responseDescription, ' failed');
@@ -80,6 +88,12 @@ export class NewInspectionsComponent implements OnInit {
           this.toastr.error(err, 'Error!');
         }
       );
+
+  }
+  deleteList(){
+    if(this.inspectionLines.length >0){
+      this.list.splice(0, this.list.length)
+    }
 
   }
   onCheckboxChange(inspectionLine: InspectionLine) {
@@ -106,8 +120,4 @@ export class NewInspectionsComponent implements OnInit {
   getInspectionLines(documentNo: String) {
     this.inspectionService.getGeneratedNo(documentNo);
   }
-  // getSelectedValue() {
-  //   console.log(this.inspectionService.formModel.value.LineNo)
-  // }
-
 }

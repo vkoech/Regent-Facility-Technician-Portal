@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'app/shared/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import { AuthServiceService } from 'app/shared/services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,26 @@ import {NgxSpinnerService} from 'ngx-spinner';
 export class LoginComponent implements OnInit {
 
   loading = false;
+  encryptMode: boolean;
+  QuickEncrypt: any;
+  disabled = true;
 
 
-  constructor(private toastr: ToastrService, public serviceLogin: LoginService, private router: Router,
-              private SpinnerService: NgxSpinnerService) { }
+  constructor(private toastr: ToastrService, public serviceLogin: LoginService, private authService: AuthServiceService, private router: Router,
+              private SpinnerService: NgxSpinnerService, private renderer: Renderer2,) { }
 
   ngOnInit(): void {
+    const Script = this.renderer.createElement('Script');
+    Script.defer = true;
+    Script.async = true;
+    Script.src = 'https://www.google.com/recaptcha/api.js';
+    this.renderer.appendChild(document.body, Script);
+
   }
+  resolved(token: any) {
+    this.disabled = false;
+  }
+
   get f() {  return this.serviceLogin.formModel?.controls; }
   // tslint:disable-next-line:typedef
   onSubmit() {

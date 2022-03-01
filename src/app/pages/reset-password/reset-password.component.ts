@@ -15,13 +15,21 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    const Script = this.renderer.createElement('Script');
+    Script.defer = true;
+    Script.async = true;
+    Script.src = 'https://www.google.com/recaptcha/api.js';
+    this.renderer.appendChild(document.body, Script);
     this.route.queryParams
     .subscribe(params => {
-      console.log(params); // { orderby: "price" }
+      console.log(params);
       this.TechnicianNo = params.TechnicianNo;
-      console.log(this.TechnicianNo); // price
+      console.log(this.TechnicianNo);
     }
-  );
+  );}
+
+   resolved(token: any) {
+    this.disabled = false;
   }
 
   onSubmit() {

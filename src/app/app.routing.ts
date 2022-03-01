@@ -20,6 +20,10 @@ export const AppRoutes: Routes = [
     path: 'resetUserPassword',
     component: ResetPasswordComponent
   },
+  // {
+  //   path: 'resetUserPasswordCodeCapture',
+  //   component: CodeCaptureComponent
+  // },
   {
     path: 'forgotPassword',
     component: ForgotPasswordComponent

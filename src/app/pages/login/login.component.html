@@ -9,10 +9,10 @@
         <!-- <h6 class="font-weight-bolder p-2">Sign in to continue.</h6> -->
         <form [formGroup]="serviceLogin.formModel"(submit)="onSubmit()" autocomplete="off">
           <div class="form-group">
-            <label for="tech_no"> Account Number</label>
+            <label for="tech_no"> Email Address</label>
             <input formControlName="TechnicianNo" id="tech_no" type="text" class="form-control">
             <div *ngIf="f.TechnicianNo.touched && f.TechnicianNo.invalid" class=" text-danger">
-              <div *ngIf="f.TechnicianNo.errors?.required">Technician No is required.</div>
+              <div *ngIf="f.TechnicianNo.errors?.required">Email Address is required.</div>
             </div>
           </div>
           <div class="form-group">
@@ -23,8 +23,12 @@
               <div *ngIf="f.Password.errors?.required">Password is required.</div>
             </div>
           </div>
+          <div class="form-group" *ngIf="serviceLogin.formModel.valid">
+            <re-captcha  (resolved)="resolved($event)" siteKey="6LdVK0oaAAAAADpp3hfCEYpLchC2GiBJREfzziwV">
+            </re-captcha>
+          </div>
           <div >
-            <button type="submit" class="btn btn-primary btn-block btn-lg " [disabled]="!serviceLogin.formModel.valid">
+            <button type="submit" class="btn btn-primary btn-block btn-lg" [class.grey]="disabled" [disabled]="disabled">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
               LogIn</button>
           </div>

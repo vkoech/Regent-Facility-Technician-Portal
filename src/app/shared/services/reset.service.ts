@@ -12,7 +12,7 @@ export class ResetService {
   readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/maintenance/';
 
   formModel = this.fb.group({
-      Password: ['', [Validators.required, Validators.minLength(8)]],
+      Password: ['', [Validators.required, Validators.pattern('(?=.*[$@$!%*?&#<>{})(?=.*[0-9])(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,}')]],
       ConfirmPassword: [''],
     },
     {
