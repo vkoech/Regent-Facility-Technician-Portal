@@ -4,7 +4,6 @@ import { LoginService } from 'app/shared/services/login.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { AuthServiceService } from 'app/shared/services/auth-service.service';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,13 +12,11 @@ import { AuthServiceService } from 'app/shared/services/auth-service.service';
 export class LoginComponent implements OnInit {
 
   loading = false;
-  encryptMode: boolean;
-  QuickEncrypt: any;
   disabled = true;
-
 
   constructor(private toastr: ToastrService, public serviceLogin: LoginService, private authService: AuthServiceService, private router: Router,
               private SpinnerService: NgxSpinnerService, private renderer: Renderer2,) { }
+
 
   ngOnInit(): void {
     const Script = this.renderer.createElement('Script');
@@ -50,6 +47,7 @@ export class LoginComponent implements OnInit {
           this.toastr.error( res.responseDescription, 'Login Failed!!!');
           this.loading = false;
         }
+        this.loading = false;
         // alert(res.responseDescription);
       },
       err => {
