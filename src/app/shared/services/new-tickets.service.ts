@@ -6,6 +6,7 @@ import {FloorModel} from '../models/floor.model';
 import {UnitsModel} from '../models/units.model';
 import {UserModel} from '../models/user.model';
 import {CategoriesModel} from '../models/categories.model';
+import { RsaService } from './rsa.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,19 +32,19 @@ export class NewTicketsService {
     }
   );
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private rsa_encryption: RsaService) {}
 
 
 // tslint:disable-next-line:typedef
   insertDetails() {
     const body = {
-      TenantNo: this.formModel.value.TenantNo,
-      PropertyNo: this.formModel.value.PropertyNo,
-      FloorNo: this.formModel.value.FloorNo,
-      UnitNo: this.formModel.value.UnitNo,
-      Category: this.formModel.value.Category,
-      DescriptionOfMaintenace: this.formModel.value.DescriptionOfMaintenace,
-      RequestStatus: this.formModel.value.RequestStatus,
+      TenantNo: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.TenantNo),
+      PropertyNo: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.PropertyNo),
+      FloorNo: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.FloorNo),
+      UnitNo: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.UnitNo),
+      Category: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.Category),
+      DescriptionOfMaintenace: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.DescriptionOfMaintenace),
+      RequestStatus: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.RequestStatus),
 
     };
     return this.http.post(this.baseUrl + '/maintenance/createServiceRequest', body);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http'
 import {FormBuilder, Validators} from '@angular/forms';
 import {AssignedTicketsModel} from '../models/assignedTickets.model';
+import { RsaService } from './rsa.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,12 @@ export class AssignedTicketsService {
       TechnicianComments: ['', Validators.required],
     }
   );
-  constructor( private http: HttpClient, private fb: FormBuilder) {}
+  constructor( private http: HttpClient, private fb: FormBuilder, private rsa_encryption: RsaService) {}
 
   addComments() {
     const body = {
-      No: this.formModel.value.No,
-      TechnicianComments: this.formModel.value.TechnicianComments,
+      No: this.rsa_encryption.encryptWithPublicKey( this.formModel.value.No),
+      TechnicianComments: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.TechnicianComments),
     };
     return this.http.post(this.baseUrl + '/postTechnicianComments', body);
   }

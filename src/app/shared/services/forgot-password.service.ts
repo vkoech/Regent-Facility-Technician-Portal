@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { RsaService } from './rsa.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class ForgotPasswordService {
     }
   );
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient,  private rsa_encryption: RsaService) { }
 
   forgotPassword() {
     const body = {
-      TechnicianNo: this.formModel.value.TechnicianNo,
+      TechnicianNo: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.TechnicianNo),
     };
     return this.http.post(this.baseUrl + '/sendTechnicianPasswordresetLink', body);
   }

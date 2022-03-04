@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmedValidator } from 'app/pages/code-capture/confirmed.validators';
+import { RsaService } from './rsa.service';
 
 
 @Injectable({
@@ -19,11 +20,11 @@ export class ResetService {
       validator: ConfirmedValidator('Password', 'ConfirmPassword')      }
   );
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private rsa_encryption: RsaService) { }
   // tslint:disable-next-line:typedef
   updatePassword() {
     const body = {
-      Password: this.formModel.value.Password,
+      Password: this.rsa_encryption.encryptWithPublicKey( this.formModel.value.Password),
     };
     return this.http.post(this.baseUrl + '/resetTechnicianPassword', body);
   }
