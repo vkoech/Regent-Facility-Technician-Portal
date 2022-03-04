@@ -20,14 +20,14 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.serviceForgotPassword.forgotPassword().subscribe(
       (res: any) => {
         if (res.responseCode) {
-          this.loading = true;
           this.serviceForgotPassword.formModel.reset();
           this.toastr.success(res.responseDescription, 'Successfully send.. Check Your Mail');
           this.router.navigate(['login']);
-          this.loading = false;
+
         } else {
           this.toastr.error(res.responseDescription, 'Check technician number');
           // this.toastr.error( 'Failed');

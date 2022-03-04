@@ -13,6 +13,7 @@ export class ResetService {
   readonly baseUrl = 'https://regent.angazake.com/facility-moduleapi/api/maintenance/';
 
   formModel = this.fb.group({
+      TechnicianNo: [''],
       Password: ['', [Validators.required, Validators.pattern('(?=.*[$@$!%*?&#<>{})(?=.*[0-9])(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,}')]],
       ConfirmPassword: [''],
     },
@@ -25,6 +26,7 @@ export class ResetService {
   updatePassword() {
     const body = {
       Password: this.rsa_encryption.encryptWithPublicKey( this.formModel.value.Password),
+      TechnicianNo: this.rsa_encryption.encryptWithPublicKey( this.formModel.value.TechnicianNo),
     };
     return this.http.post(this.baseUrl + '/resetTechnicianPassword', body);
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ToastrService} from 'ngx-toastr'
 import { ResetService } from 'app/shared/services/reset.service';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -11,6 +11,11 @@ import { ToastrService } from 'ngx-toastr';
 export class ResetPasswordComponent implements OnInit {
   disabled = true;
   TechnicianNo: string;
+  loading = false;
+
+
+
+
   constructor(public resetForgotPassword: ResetService,private toastr: ToastrService, private renderer: Renderer2, private route: ActivatedRoute,
     private router: Router) { }
 
@@ -28,22 +33,29 @@ export class ResetPasswordComponent implements OnInit {
     }
   );}
 
-   resolved(token: any) {
+  resolved(token: any) {
     this.disabled = false;
   }
 
   onSubmit() {
+    this.loading = true;
     this.resetForgotPassword.updatePassword().subscribe(
       (res: any) => {
         if (res.responseCode) {
           this.resetForgotPassword.formModel.reset();
+          // reset recapture after success
+          // grecaptcha.reset();
+          // this.responseCode = true;
           this.toastr.success(res.responseDescription, 'Password Changed Successful');
           this.router.navigate(['login']);
         } else {
+          this.loading = false;
           this.toastr.error( res.responseDescription, 'Check Error!');
         }
+        // alert(res.responseDescription);
       },
       err => {
+        this.disabled=false;
         console.log(err);
         this.toastr.error(err, 'Error!');
       }
