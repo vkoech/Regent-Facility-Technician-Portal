@@ -46,13 +46,13 @@ export class LoginComponent implements OnInit {
         } else {
           this.toastr.error( res.responseDescription, 'Login Failed!!!');
           this.loading = false;
+          grecaptcha.reset();
         }
-        this.loading = false;
         // alert(res.responseDescription);
       },
       err => {
-         console.log(err);
          this.loading = false;
+         grecaptcha.reset();
         this.toastr.error(err, 'Error!');
       }
     );

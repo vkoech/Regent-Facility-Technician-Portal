@@ -16,6 +16,11 @@
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
+    <p style="color: red; text-align: center;"><strong >{{idleState}}</strong></p>
+    <p *ngIf="lastPing"><small>Last keepalive ping <strong>{{lastPing | amTimeAgo}}</strong></small></p>
+    <strong hidden>Do you want to continue?</strong ><br>
+    <button (click)="reset()" *ngIf="timed ">yes</button>
+    <button (click)="reset()" *ngIf="timedOut">Restart</button>
     <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
       <form>
         <div class="input-group no-border mr-5">

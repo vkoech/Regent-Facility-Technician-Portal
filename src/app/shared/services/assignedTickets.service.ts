@@ -24,7 +24,7 @@ export class AssignedTicketsService {
   addComments() {
     const body = {
       No: this.rsa_encryption.encryptWithPublicKey( this.formModel.value.No),
-      TechnicianComments: this.rsa_encryption.encryptWithPublicKey(this.formModel.value.TechnicianComments),
+      TechnicianComments: this.formModel.value.TechnicianComments,
     };
     return this.http.post(this.baseUrl + '/postTechnicianComments', body);
   }

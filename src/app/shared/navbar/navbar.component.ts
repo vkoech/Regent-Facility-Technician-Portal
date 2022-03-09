@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/co
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
+import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 
 @Component({
     moduleId: module.id,
@@ -17,16 +18,51 @@ export class NavbarComponent implements OnInit {
     private nativeElement: Node;
     private toggleButton;
     private sidebarVisible: boolean;
+    timed :boolean = false;
+    idleState = 'Not started.';
+    timedOut = false;
+    lastPing?: Date = null;
+    countdown:any;
 
     public isCollapsed = true;
     @ViewChild('navbar-cmp', {static: false}) button;
 
-    constructor(location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router) {
+    constructor(location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, private idle: Idle) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
-    }
 
+                // sets an idle timeout of 5 seconds, for testing purposes.
+    idle.setIdle(300);
+    // sets a timeout period of 5 seconds. after 10 seconds of inactivity, the user will be considered timed out.
+    idle.setTimeout(60);
+    // sets the default interrupts, in this case, things like clicks, scrolls, touches to the document
+    idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+
+    idle.onIdleEnd.subscribe(() => this.idleState = ' ');
+    idle.onTimeout.subscribe(() => {
+      this.idleState = 'Timed out!';
+      this.timedOut = true;
+    });
+
+    idle.onIdleStart.subscribe(() => this.idleState = 'You\'ve gone idle!');
+    idle.onTimeoutWarning.subscribe((countdown) => {
+
+    this.idleState = 'You will be  logged out in ' + countdown + ' seconds!';
+    // console.log(countdown)
+    if(countdown == 1){
+      this.timed = true;
+      this.logout();
+    }
+    });
+    // sets the ping interval to 15 seconds
+    this.reset();
+    }
+    reset() {
+      this.idle.watch();
+      this.idleState = ' ';
+      this.timedOut = false;
+    }
     ngOnInit() {
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         const navbar: HTMLElement = this.element.nativeElement;

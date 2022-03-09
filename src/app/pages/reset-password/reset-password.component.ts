@@ -29,7 +29,6 @@ export class ResetPasswordComponent implements OnInit {
     .subscribe(params => {
       console.log(params);
       this.TechnicianNo = params.TechnicianNo;
-      console.log(this.TechnicianNo);
     }
   );}
 
@@ -43,20 +42,17 @@ export class ResetPasswordComponent implements OnInit {
       (res: any) => {
         if (res.responseCode) {
           this.resetForgotPassword.formModel.reset();
-          // reset recapture after success
-          // grecaptcha.reset();
-          // this.responseCode = true;
           this.toastr.success(res.responseDescription, 'Password Changed Successful');
           this.router.navigate(['login']);
         } else {
           this.loading = false;
           this.toastr.error( res.responseDescription, 'Check Error!');
-        }
-        // alert(res.responseDescription);
+          grecaptcha.reset();
+        };
       },
       err => {
         this.disabled=false;
-        console.log(err);
+        grecaptcha.reset();
         this.toastr.error(err, 'Error!');
       }
     );

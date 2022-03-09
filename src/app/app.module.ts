@@ -24,6 +24,8 @@ import { InspectionComponent } from './pages/inspection/inspection.component';
 import { NewInspectionsComponent } from './pages/new-inspections/new-inspections.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { MomentModule } from 'angular2-moment';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 
 
 
@@ -53,7 +55,9 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     FormsModule,
     RecaptchaFormsModule,
     RecaptchaModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MomentModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
