@@ -34,12 +34,12 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:typedef
   onSubmit() {
     this.loading = true;
-    localStorage.setItem('techNo',
-    this.serviceLogin.formModel.value.TechnicianNo);
+    localStorage.setItem('techNo',this.serviceLogin.formModel.value.TechnicianNo);
     this.serviceLogin.login().subscribe(
       (res: any) => {
         if (res.responseCode) {
           this.serviceLogin.formModel.reset();
+          localStorage.setItem('techNo', res.Id);
           this.toastr.success(res.responseDescription, 'Login Successful');
           this.SpinnerService.hide();
           this.router.navigate(['assignedTickets']);
