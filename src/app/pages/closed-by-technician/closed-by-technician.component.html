@@ -3,12 +3,58 @@
     <div class="card">
       <div class="card-header">
         <div class="row">
-          <div class="col">
+          <div class="col mb-3">
             Closed Tickets
           </div>
         </div>
       </div>
-      <div class="card-body">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>
+              No
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              Floor
+            </th>
+            <th>
+              Unit Number
+            </th>
+            <th>
+              Category
+            </th>
+            <th>
+              Request Status
+            </th>
+            <th>
+              Maintenance Description
+            </th>
+            <th>
+              Technician Comments
+            </th>
+            <th>
+              Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tickets of closedByTechService.closedByTech">
+            <td>{{tickets.No}}</td>
+            <td>{{tickets.PropertyDescription}}</td>
+            <td>{{tickets.FloorNo}}</td>
+            <td>{{tickets.UnitNo}}</td>
+            <td>{{tickets.Category}}</td>
+            <td>{{tickets.RequestStatus}}</td>
+            <td>{{tickets.DescriptionOfMaintenace}}</td>
+            <td>{{tickets.TechnicianComments}}</td>
+            <td>{{tickets.Status}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="card-body">
         <div class="table-responsive table-striped table-condensed">
           <table class="table">
             <thead class="text-primary font-weight-bold bg-dark">
@@ -55,7 +101,7 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

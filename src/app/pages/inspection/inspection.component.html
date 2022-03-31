@@ -10,45 +10,41 @@
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="table-responsive table-striped table-condensed">
-            <table class="table">
-              <thead class=" text-secondary">
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+          <thead>
+            <tr>
               <th>
-              Document No.
-              </th>
-              <th>
-                Type
-              </th>
-              <th>
-                Date of inspection
-              </th>
-              <th>
-               Time of inspection
-              </th>
-              <th>
-                Area/Item inspected
-              </th>
-              <th>
-                Status
-              </th>
-              <!-- <th>
-                Action
-              </th> -->
-              </thead>
-              <tbody>
-              <tr *ngFor="let inspectionHeaderObj of inspectionJsonValues">
-                <td>{{inspectionHeaderObj.No}}</td>
-                <td>{{inspectionHeaderObj.Type}}</td>
-                <td>{{inspectionHeaderObj.InspectionDate}}</td>
-                <td>{{inspectionHeaderObj.InspectionTime}}</td>
-                <td>{{inspectionHeaderObj.ItemName}}</td>
-                <td>{{inspectionHeaderObj.Status}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+                Document No.
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Date of inspection
+                </th>
+                <th>
+                 Time of inspection
+                </th>
+                <th>
+                  Area/Item inspected
+                </th>
+                <th>
+                  Status
+                </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let inspectionHeaderObj of inspectionJsonValues">
+              <td>{{inspectionHeaderObj.No}}</td>
+              <td>{{inspectionHeaderObj.Type}}</td>
+              <td>{{inspectionHeaderObj.InspectionDate}}</td>
+              <td>{{inspectionHeaderObj.InspectionTime}}</td>
+              <td>{{inspectionHeaderObj.ItemName}}</td>
+              <td>{{inspectionHeaderObj.Status}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+

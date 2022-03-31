@@ -3,59 +3,60 @@
     <div class="card">
       <div class="card-header">
         <div class="row">
-          <div class="col">
+          <div class="col mb-3">
             Assigned Tickets
           </div>
         </div>
       </div>
-      <div class="card-body">
-        <div class="table-responsive  table-striped">
-          <table class="table">
-            <thead class=" text-primary font-weight-bold bg-dark">
-            <th>
-              No
-            </th>
-            <th>
-              Property Description
-            </th>
-            <th>
-              Floor Number
-            </th>
-            <th>
-              Unit Number
-            </th>
-            <th>
-              Category
-            </th>
-            <th>
-              Request Status
-            </th>
-            <th>
-              Maintenance Description
-            </th>
-            <th>
-              Status
-            </th>
-            <th>
-              Action
-            </th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let tickets of assignedTicketService.assignedTickets">
-              <td>{{tickets.No}}</td>
-              <td>{{tickets.PropertyDescription}}</td>
-              <td>{{tickets.FloorNo}}</td>
-              <td>{{tickets.UnitNo}}</td>
-              <td>{{tickets.Category}}</td>
-              <td>{{tickets.RequestStatus}}</td>
-              <td>{{tickets.DescriptionOfMaintenace}}</td>
-              <td>{{tickets.Status}}</td>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm" (click)="open(mymodal, tickets)" >Comment & Close</button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+      <!-- <div class="card-body"> -->
+<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th>
+        No
+      </th>
+      <th>
+        Property Description
+      </th>
+      <th>
+        Floor Number
+      </th>
+      <th>
+        Unit Number
+      </th>
+      <th>
+        Category
+      </th>
+      <th>
+        Request Status
+      </th>
+      <th>
+        Maintenance Description
+      </th>
+      <th>
+        Status
+      </th>
+      <th>
+        Action
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let tickets of assignedTicketService.assignedTickets">
+      <td style="width: 1%;">{{tickets.No}}</td>
+      <td style="width: 4%;">{{tickets.PropertyDescription}}</td>
+      <td style="width: 4%;">{{tickets.FloorNo}}</td>
+      <td style="width:  4%;">{{tickets.UnitNo}}</td>
+      <td style="width: 4%;">{{tickets.Category}}</td>
+      <td style="width: 4%;">{{tickets.RequestStatus}}</td>
+      <td style="width: 25%;">{{tickets.DescriptionOfMaintenace}}</td>
+      <td style="width: 2%;">{{tickets.Status}}</td>
+      <td style="width: 2%;">
+        <button type="button" class="btn btn-primary btn-sm" (click)="open(mymodal, tickets)" >Comment & Close</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
           <ng-template #mymodal let-modal>
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">Add Comments and Close Tickets</h4>
@@ -94,8 +95,7 @@
               </form>
             </div>
           </ng-template>
-        </div>
       </div>
     </div>
   </div>
-</div>
+<!-- </div> -->

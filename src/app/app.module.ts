@@ -26,6 +26,9 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { MomentModule } from 'angular2-moment';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { DataTablesModule } from 'angular-datatables';
+
+
 
 
 
@@ -58,6 +61,9 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
     NgxSpinnerModule,
     NgIdleKeepaliveModule.forRoot(),
     MomentModule,
+    DataTablesModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
